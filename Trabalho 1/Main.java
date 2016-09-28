@@ -1,12 +1,12 @@
 import java.io.IOException;
-
+import java.util.Random;
 import static java.lang.Thread.sleep;
 
 public class Main {
 
     public static void main(String[] args) {
-        Random gerador;
-        int valor, i;
+        Random gerador = new Random();
+        int numero, i;
 
         try {
             Node a = new Node();
