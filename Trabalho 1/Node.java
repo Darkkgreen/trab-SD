@@ -69,17 +69,15 @@ public class Node{
                         }
                         System.out.println();
                     }
-                    //----------------------------------------------------------------------------------------
-                    // verifica se tem 3 acks de resposta da mesma msg, remove da fila e printa a msg removida
+
                     while(!fMsg.isEmpty() && fMsg.peek().getAcks() == 3){
                         msg = fMsg.remove();
                         if (this.iNode == lider){
                             System.out.println("removed : " + msg);
                         }
                     }
-                }else{// se é somente uma msg, ou seja, nao tem ack nela, so adiciona na fila
+                }else{
                     fMsg.add(msg);
-                    // envia Ack resposta em multicast 
                     sendAck(msg.getId());
                 }
 

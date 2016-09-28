@@ -1,8 +1,3 @@
-package com.company;
-
-/**
- * Created by renan on 8/18/15.
- */
 public class Message implements java.io.Serializable, Comparable<Message>{
     private static int nextId = 0;
 
