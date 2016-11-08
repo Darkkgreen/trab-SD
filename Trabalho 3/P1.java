@@ -17,16 +17,10 @@ public class P1{
     private static Clock clock;
     private static TreeSet<Message> filaMsg;
     private static int qtdACK[] = new int[100];
-    private static int recurso = 1; //Igual para todos 
-    //Lista para guardar os recursos q o Processo está usando
-    private static ArrayList<Integer> recursoEmUso = new ArrayList<Integer>();
-    //Lista para guardar os recursos q o Processo está querendo usar, que requisitou
-    //Guarda a mensagem, pois esta contem o time e o recurso
-    private static ArrayList<Message> queroUsar = new ArrayList<Message>();
-
-    private static ArrayList<Message> requisicao = new ArrayList<Message>();
-    
-
+    //Lista para guardar os PIDs dos processos existentes
+    //No caso, usamos P1, P2, P3, P4, P5.
+    private static ArrayList<Integer> idsProcessos = new ArrayList<Integer>();
+    private static int coordenadorAtual;
     public static void main(String[] args) throws IOException{
         int i, idMsg;
         idNode = 1;
@@ -76,18 +70,26 @@ public class P1{
         }).start();
     }
 
-    public static void sendMsgMult(int idMsg, int idSender, int clock, int rec, int tipo ){
+    public static void sendMsgMult(int idMsg, int idSender, int clock, int coord, int tipo ){
         int portaDestino1 = port;
         int portaDestino2 = 9002;
         int portaDestino3 = 9003;
-        Message msg = new Message(idMsg, idSender, clock, recurso, tipo);
+        int portaDestino4 = 9004;
+        int portaDestino5 = 9005;
+        
+        Message msg = new Message(idMsg, idSender, clock, coord, tipo);
         sendTo(portaDestino1, msg);
         sendTo(portaDestino2, msg);
         sendTo(portaDestino3, msg);
-        if(tipo == Message.MSG){
-            //Indico que quero usar o recurso
-            queroUsar.add(msg);
-            System.out.println("Mensagem "+idMsg+" enviada por multicasting pelo P"+idSender+". Pediu acesso ao recurso: "+rec);
+        sendTo(portaDestino4, msg);
+        sendTo(portaDestino5, msg);
+        
+        if(tipo == Message.ELEICAO){
+            //Indico que quero uma elecao.
+            System.out.println("P"+idSender+" convoca uma eleicao."); 
+       }
+       else if(tipo == Message.NOVO_COORD){
+            System.out.println("P"+idSender+" declara que o novo coordenador eh: "+coord); 
        }
     }
 
@@ -99,10 +101,10 @@ public class P1{
                 Socket socketEnvio = null;
                 BufferedWriter bfEnvio = null;
 
-                if(msg.getTipo() == Message.ACK)
-                    conteudoMsg = "ACK-"+msg.getId()+"-"+msg.getSenderId()+"-"+msg.getClock()+"-"+msg.getRecurso();
+                if(msg.getTipo() == Message.ELEICAO)
+                    conteudoMsg = "ELEICAO-"+msg.getSenderId()+"-"+msg.getClock()+"-"+msg.getCoordenador();
                 else if(msg.getTipo() == Message.MSG)
-                    conteudoMsg = "MSG-"+msg.getId()+"-"+msg.getSenderId()+"-"+msg.getClock()+"-"+msg.getRecurso();
+                    conteudoMsg = "MSG-"+msg.getSenderId()+"-"+msg.getClock()+"-"+msg.getCoordenador();
                 else if(msg.getTipo() == Message.NACK)
                     conteudoMsg = "NACK-"+msg.getId()+"-"+msg.getSenderId()+"-"+msg.getClock()+"-"+msg.getRecurso();
                 try{
