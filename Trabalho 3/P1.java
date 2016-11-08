@@ -103,10 +103,10 @@ public class P1{
 
                 if(msg.getTipo() == Message.ELEICAO)
                     conteudoMsg = "ELEICAO-"+msg.getSenderId()+"-"+msg.getClock()+"-"+msg.getCoordenador();
-                else if(msg.getTipo() == Message.MSG)
-                    conteudoMsg = "MSG-"+msg.getSenderId()+"-"+msg.getClock()+"-"+msg.getCoordenador();
-                else if(msg.getTipo() == Message.NACK)
-                    conteudoMsg = "NACK-"+msg.getId()+"-"+msg.getSenderId()+"-"+msg.getClock()+"-"+msg.getRecurso();
+                else if(msg.getTipo() == Message.OK)
+                    conteudoMsg = "OK-"+msg.getSenderId()+"-"+msg.getClock()+"-"+msg.getCoordenador();
+                else if(msg.getTipo() == Message.NOVO_COORD)
+                    conteudoMsg = "NOVO_COORD-"+msg.getId()+"-"+msg.getSenderId()+"-"+msg.getClock()+"-"+msg.getRecurso();
                 try{
                     socketEnvio = new Socket(ip, destino);
                     bfEnvio = new BufferedWriter( new OutputStreamWriter(socketEnvio.getOutputStream()));
