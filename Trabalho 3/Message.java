@@ -10,21 +10,26 @@ public class Message implements Comparable<Message>{
     private final int clock;
     private  int tipo;
     private int senderId;
+    private int coordenador; //Guarda o coordenador atual
     public static int ELEICAO = 1;    
     public static int OK = 0;
     public static int NOVO_COORD = 2;
     private int acks;
 
-    public Message(int id, int senderId, int clock, int recurso, int tipo) {
+    public Message(int id, int senderId, int clock, int coord, int tipo) {
         this.id = id; 
         this.senderId = senderId;
         this.clock = clock;
+        this.coordenador = coord;
         this.acks = 0; //Total de acks
         this.tipo = tipo; // Fala se é uma mensagem de retorno ou não
     }
 
     public int getSenderId(){
         return senderId;
+    }
+    public int getCoordenador(){
+        return coordenador;
     }
 
     public int getId() {
