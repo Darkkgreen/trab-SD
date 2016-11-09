@@ -67,7 +67,7 @@ public class P4{
                             Thread.sleep(4000);
                         }catch(Exception e){}
                         //Envia o texto da msg para tratamento em outra thread.
-                        //treatMsg(conteudoMsg);
+                        treatMsg(conteudoMsg);
                     }
                 }catch(IOException e){e.printStackTrace();}
 
@@ -151,8 +151,9 @@ public class P4{
                     clock.ajustaClock(timeMsg);
                     //Quando processo recebe msg de eleição de membros com número mais baixo
                     //Envia OK para remetente para indicar que está vivo e convoca eleição
+                      System.out.println("Recebeu uma mensagem de solicitacao de Eleicao.");  
                     if(idNode > idSender){
-                      enviaOK(idMsg, clock.getValor(), coordMsg, idSender);  
+                        enviaOK(idMsg, clock.getValor(), coordMsg, idSender);  
                     }
                 }else if(tipo == Message.OK){
                    //recebeu um ack: incrementa o relogio
@@ -179,10 +180,14 @@ public class P4{
             System.out.print("P"+idNode+" convoca uma eleicao para: P"); 
         for(i = 0; i<5; i++){
             if(idsProcessos[i] > idNode){
-                sendTo(i+9000, m);
-                System.out.print(i+" "); 
+                sendTo(idsProcessos[i]+9000, m);
+                System.out.print(idsProcessos[i]+" "); 
             }
         }
+        try{
+            Thread.sleep(5000);
+        }catch(Exception e){}
+
         if(!recebeuResposta(idMsg)){
             novoCoord = idNode;
             avisaNovoCoord(idMsg,idNode, clock, novoCoord);
@@ -192,7 +197,7 @@ public class P4{
     public static boolean recebeuResposta(int idMsg){
         System.out.println("Aguardando respostas por 5 seg.");
         try{
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         }catch(Exception e){}
 
         int i, cont = 0;
@@ -212,6 +217,7 @@ public class P4{
     //Envia Ok para quem solicitou a eleicao com PID menor.
     public static void enviaOK(int idMsg, int clock, int coord, int remetente){
         Message m = new Message(idMsg, idNode, clock, coord, Message.OK);
+        System.out.println("Mandando ok para: P"+remetente);
         sendTo(remetente+9000, m);   
     }
 

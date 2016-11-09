@@ -43,7 +43,7 @@ public class P1{
         }catch(Exception e){}
 
         //Envia mensagem para os outros processos pedindo eleicao
-        solicitaEleicao(idNode, clock.getValor(), coordenadorAtual);
+        //solicitaEleicao(idNode, clock.getValor(), coordenadorAtual);
 
         //Como aconteceu um evento, o clock é incrementado
         clock.incrementaClock();
@@ -67,7 +67,7 @@ public class P1{
                             Thread.sleep(4000);
                         }catch(Exception e){}
                         //Envia o texto da msg para tratamento em outra thread.
-                        //treatMsg(conteudoMsg);
+                        treatMsg(conteudoMsg);
                     }
                 }catch(IOException e){e.printStackTrace();}
 
@@ -151,6 +151,7 @@ public class P1{
                     clock.ajustaClock(timeMsg);
                     //Quando processo recebe msg de eleição de membros com número mais baixo
                     //Envia OK para remetente para indicar que está vivo e convoca eleição
+                    System.out.println("Recebeu uma mensagem de solicitacao de Eleicao.");  
                     if(idNode > idSender){
                       enviaOK(idMsg, clock.getValor(), coordMsg, idSender);  
                     }
@@ -179,10 +180,13 @@ public class P1{
             System.out.print("P"+idNode+" convoca uma eleicao para: P"); 
         for(i = 0; i<5; i++){
             if(idsProcessos[i] > idNode){
-                sendTo(i+9000, m);
-                System.out.print(i+" "); 
+                sendTo(idsProcessos[i]+9000, m);
+                System.out.print(idsProcessos[i]+" "); 
             }
         }
+        try{
+            Thread.sleep(5000);
+        }catch(Exception e){}
         if(!recebeuResposta(idMsg)){
             novoCoord = idNode;
             avisaNovoCoord(idMsg,idNode, clock, novoCoord);
@@ -212,6 +216,7 @@ public class P1{
     //Envia Ok para quem solicitou a eleicao com PID menor.
     public static void enviaOK(int idMsg, int clock, int coord, int remetente){
         Message m = new Message(idMsg, idNode, clock, coord, Message.OK);
+        System.out.println("Mandando ok para: P"+remetente);
         sendTo(remetente+9000, m);   
     }
 
