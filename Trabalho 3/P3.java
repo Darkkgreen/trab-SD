@@ -162,6 +162,7 @@ public class P3{
                     System.out.println("Recebi um OK de P"+idSender+". Encerro minha atividade.");
 
                 }else if(tipo == Message.NOVO_COORD){
+                    System.out.println("Novo coordenador:" +coordMsg);                   
                     coordenadorAtual = coordMsg;
                 }
             }

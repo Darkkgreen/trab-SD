@@ -67,7 +67,7 @@ public class P5{
                             Thread.sleep(4000);
                         }catch(Exception e){}
                         //Envia o texto da msg para tratamento em outra thread.
-                        treatMsg(conteudoMsg);
+                        //treatMsg(conteudoMsg);
                     }
                 }catch(IOException e){e.printStackTrace();}
 
@@ -162,6 +162,7 @@ public class P5{
                     System.out.println("Recebi um OK de P"+idSender+". Encerro minha atividade.");
 
                 }else if(tipo == Message.NOVO_COORD){
+                    System.out.println("Novo coordenador:" +coordMsg);                   
                     coordenadorAtual = coordMsg;
                 }
             }
