@@ -38,8 +38,9 @@ public class P1{
 
         //Coloca o processo para receber mensagens
         receiveMsg();
+        killThread();
         try{
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         }catch(Exception e){}
 
         //Envia mensagem para os outros processos pedindo eleicao
@@ -71,6 +72,20 @@ public class P1{
                     }
                 }catch(IOException e){e.printStackTrace();}
 
+            }
+        }).start();
+    }
+
+   public static void killThread(){
+        (new Thread(){
+            @Override
+            public void run(){
+                Scanner scan = new Scanner(System.in);
+                while(!scan.hasNextLine()){
+
+                }
+
+                System.out.println("Processo " + idNode + " has been killed");
             }
         }).start();
     }
