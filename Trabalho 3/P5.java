@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.net.ServerSocket;
 import java.util.*;
 
-public class P1{
+public class P5{
     private static int idNode;
     private static int port;
     private static String ip = "localhost";
@@ -24,7 +24,7 @@ public class P1{
     
     public static void main(String[] args) throws IOException{
         int i, idMsg;
-        idNode = 1;
+        idNode = 5;
         port = 9000+idNode;
         coordenadorAtual = 5; //Inicia com o 5 sendo o coordenador
         filaMsg = new TreeSet<Message>(new MessageComp());
