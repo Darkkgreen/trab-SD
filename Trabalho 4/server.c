@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "IDL.h"
 
-int * enviaArq_1_svc(struct infoArq *recebe, struct svc_req *request) { 
+int * send_file_1_svc(struct infoArq *recebe, struct svc_req *request) { 
     FILE *arquivo;
     static int retorno;
 

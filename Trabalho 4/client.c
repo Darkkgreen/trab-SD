@@ -10,14 +10,14 @@ int main(int argc, char *argv[])
     struct infoArq chunk;
     FILE *arquivo;
 
-    cliente = clnt_create(argv[0], PROG, VERSION, "tcp");
+    cliente = clnt_create(argv[1], PROG, VERSION, "tcp");
 
     if(cliente == NULL) {
-         clnt_pcreateerror(argv[0]);
+         clnt_pcreateerror(argv[1]);
          return (0);
     } 
 
-    arquivo = fopen(argv[1], "r");
+    arquivo = fopen(argv[2], "r");
 
 	if(arquivo == NULL){
 		perror("Arquivo inexistente\n");
@@ -25,9 +25,9 @@ int main(int argc, char *argv[])
 	}
 
 
-    chunk.argv[1] = argv[1];
+    chunk.nome = argv[2];
      
-    printf("Iniciando transferência do arquivo %s\n", argv[1]);
+    printf("Iniciando transferência do arquivo %s\n", argv[2]);
 
     while(1)
     {
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
         if(resposta == NULL)
         {
-            clnt_perror(cliente, argv[0]);
+            clnt_perror(cliente, argv[1]);
             return (0);
         } 
 
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
    
         if(chunk.bytes < MAXLEN)
         {
-            printf("Arquivo %s enviado com sucesso ao servidor\n", argv[1]);
+            printf("Arquivo %s enviado com sucesso ao servidor\n", argv[2]);
             break; 
         }
     }
