@@ -5,7 +5,7 @@ int * enviaArq_1_svc(struct infoArq *recebe, struct svc_req *request) {
     FILE *arquivo;
     static int retorno;
 
-    arquivo = fopen(recebe->name, "a"); 
+    arquivo = fopen(recebe->nome, "a"); 
 
     if(arquivo == NULL)
     {
