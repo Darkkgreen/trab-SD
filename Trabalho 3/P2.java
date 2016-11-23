@@ -17,6 +17,7 @@ public class P2{
     private static Clock clock;
     private static TreeSet<Message> filaMsg;
     private static int qtdACK[] = new int[100];
+    private static boolean working;
     //Lista para guardar os PIDs dos processos existentes
     //No caso, usamos P1, P2, P3, P4, P5.
     private static int idsProcessos[] = new int[6];
@@ -29,6 +30,7 @@ public class P2{
         coordenadorAtual = 5; //Inicia com o 5 sendo o coordenador
         filaMsg = new TreeSet<Message>(new MessageComp());
         clock = new Clock(idNode);
+        working = true;
 
         //Inicializa o vetor de acks
         for(i=0; i<10;i++) qtdACK[i] = 0;
@@ -38,13 +40,14 @@ public class P2{
 
         //Coloca o processo para receber mensagens
         receiveMsg();
+        killThread();
         try{
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         }catch(Exception e){}
 
         //Envia mensagem para os outros processos pedindo eleicao
-        solicitaEleicao(idNode, clock.getValor(), coordenadorAtual);
-        System.out.println();
+        if(working)
+            solicitaEleicao(idNode, clock.getValor(), coordenadorAtual);
         //Como aconteceu um evento, o clock é incrementado
         clock.incrementaClock();
     }
@@ -56,7 +59,7 @@ public class P2{
                 String conteudoMsg = null;
                 try{
                     ServerSocket socketRecebimento = new ServerSocket(port);
-                    while(true){
+                    while(working){
                         Socket aux = socketRecebimento.accept();
                         BufferedReader bfRecebido;
                         //Pega o texto que recebeu no socket
@@ -71,6 +74,21 @@ public class P2{
                     }
                 }catch(IOException e){e.printStackTrace();}
 
+            }
+        }).start();
+    }
+
+    public static void killThread(){
+        (new Thread(){
+            @Override
+            public void run(){
+                Scanner scan = new Scanner(System.in);
+                while(!scan.hasNextLine()){
+
+                }
+
+                System.out.println("Processo " + idNode + " has been killed");
+                working = false;
             }
         }).start();
     }
