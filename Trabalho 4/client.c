@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {	
 	CLIENT *cliente;
     int *resposta;
-    struct file_info chunk;
+    struct infoArq chunk;
     FILE *arquivo;
 
     cliente = clnt_create(argv[0], PROG, VERSION, "tcp");
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     while(1)
     {
         chunk.bytes = fread(chunk.dados, 1, MAXLEN, arquivo);
-        resposta = enviaArq_1(&chunk, cliente);
+        resposta = send_file_1(&chunk, cliente);
 
         if(resposta == NULL)
         {
