@@ -1,0 +1,26 @@
+rpcgen IDL.x
+
+client:
+	cc -c client.c -o client.o
+cc -c IDL_clnt.c -o IDL_clnt.o
+cc -c IDL_xdr.c -o IDL_xdr.o
+cc -o client client.o IDL_clnt.o IDL_xdr.o -lnsl
+
+
+server:
+cc -c server.c -o server.o
+cc -c IDL_svc.c -o IDL_svc.o
+cc -o server server.o IDL_svc.o IDL_xdr.o -lnsl
+
+
+para rodar o server use:
+sudo ./server
+
+para rodar o client use
+sudo ./client 
+digite o ip do hosto
+digite o nome do arquivo
+
+
+SE QUISER SABER O TEMPO USE:
+time ./client
