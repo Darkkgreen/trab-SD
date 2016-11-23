@@ -16,6 +16,6 @@ program PROG
 {
     version VERSION
     {
-        int enviaArq(struct infoArq *) = 1;
+        int send_file(struct infoArq *) = 1;
     } = 1;
 } = 0x31000699;
