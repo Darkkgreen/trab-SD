@@ -5,63 +5,54 @@
 
 int main(int argc, char *argv[])
 {	
-	CLIENT *clnt;
-    int *res;
+	CLIENT *cliente;
+    int *resposta;
     struct file_info chunk;
-    FILE *file;	
-	char host[50], name[50];
+    FILE *arquivo;
 
-    printf("Type the HOST IP: ");
-    scanf("%s", host);
+    cliente = clnt_create(argv[0], PROG, VERSION, "tcp");
 
-    printf("Type the FILE NAME: \n");
-    scanf("%s",name);
-
-    //Cria conexao com o servidor
-    clnt = clnt_create(host, PROG, VERSION, "tcp");
-    if(clnt == NULL) {
-         clnt_pcreateerror(host);
+    if(cliente == NULL) {
+         clnt_pcreateerror(argv[0]);
          return (0);
     } 
 
-    //File recebe a abertura do arquivo digitado para a leitura
-    file = fopen(name, "r");
+    arquivo = fopen(argv[1], "r");
 
-    //Se o arquivo for nulo, exibimos que o arquivo nao existe, nao foi encontrado
-	if(file == NULL){
-		perror("The file does not exist!!\n");
+	if(arquivo == NULL){
+		perror("Arquivo inexistente\n");
 		return (0);
 	}
 
 
-    chunk.name = name;
-    
-    //Comeca a transferencia    
-    printf("Transferring, please, wait...\n");
+    chunk.argv[1] = argv[1];
+     
+    printf("Iniciando transferência do arquivo %s\n", argv[1]);
+
     while(1)
     {
-        chunk.bytes = fread(chunk.data, 1, MAXLEN, file);
-        res = send_file_1(&chunk, clnt);
+        chunk.bytes = fread(chunk.dados, 1, MAXLEN, arquivo);
+        resposta = enviaArq_1(&chunk, cliente);
 
-        if(res == NULL)
+        if(resposta == NULL)
         {
-            clnt_perror(clnt, host);
+            clnt_perror(cliente, argv[0]);
             return (0);
         } 
 
-        if(*res != 0)
+        if(*resposta != 0)
         {
-           	fprintf(stderr, "Sorry, an error occurred! :(");
+           	fprintf(stderr, "Ocorreu um erro durante a transferência\n");
             return (0);
         } 
    
         if(chunk.bytes < MAXLEN)
         {
-            printf("File successfully transferred! :D");
+            printf("Arquivo %s enviado com sucesso ao servidor\n", argv[1]);
             break; 
         }
     }
 
-    fclose(file);	
+    fclose(arquivo);	
 	return (0);
 }

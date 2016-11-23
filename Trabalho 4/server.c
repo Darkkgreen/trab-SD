@@ -1,21 +1,21 @@
 #include <stdio.h>
 #include "IDL.h"
 
-int * send_file_1_svc(struct file_info *rec, struct svc_req *rqstp) { 
-    FILE *file;
-    static int ret;
+int * enviaArq_1_svc(struct infoArq *recebe, struct svc_req *request) { 
+    FILE *arquivo;
+    static int retorno;
 
-    file = fopen(rec->name, "a"); 
+    arquivo = fopen(recebe->name, "a"); 
 
-    if(file == NULL)
+    if(arquivo == NULL)
     {
-        ret = -1;      
-	   return &ret;
+        retorno = -1;      
+	   return &retorno;
     } 
 
-    fwrite(rec->data, 1, rec->bytes, file);
-    fclose(file);
+    fwrite(recebe->dados, 1, recebe->bytes, arquivo);
+    fclose(arquivo);
 
-    ret = 0;
-    return &ret;
+    retorno = 0;
+    return &retorno;
 }
