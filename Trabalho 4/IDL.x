@@ -1,3 +1,6 @@
+/* Implementação
+Ângela Rodrigues Ferreira - 552070
+Gustavo Almeida Rodrigues - 489999 */
 const MAXNAME = 256;
 const MAXLEN = 1024;
 
