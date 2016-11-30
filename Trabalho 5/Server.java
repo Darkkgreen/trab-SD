@@ -4,10 +4,11 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 
-public class Server implements Hello{
+public class Server implements Archive{
 	public Server(){}
-	public String sayHello(){
-		return "hello, world!";
+	
+	public boolean uploadArchive(){
+		
 	}
 
 	public static void main(String args[]){
@@ -15,6 +16,7 @@ public class Server implements Hello{
 			Server obj = new Server(); 
 			Hello stub = (Hello) UnicastRemoteObject.exportObject(obj, 0);    
 			Registry registry = LocateRegistry.getRegistry(); 
+			System.setProperty("java.rmi.server.hostname","127.0.0.1");
 			registry.bind("Hello", stub); 
 			System.err.println("Server ready"); 
 		} catch(Exception e){
