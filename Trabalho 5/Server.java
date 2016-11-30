@@ -13,7 +13,7 @@ public class Server implements Archive{
 		System.out.println("Transferindo arquivo para servidor: " + nome);
 
 		try{
-			FileOutputStream fos = new FileOutputStream(nome);
+			FileOutputStream fos = new FileOutputStream("./teste/" + nome);
 			fos.write(byteArchive);
 			fos.close();
 		}catch (IOException e){

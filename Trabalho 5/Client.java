@@ -4,9 +4,9 @@ import java.rmi.registry.LocateRegistry;
 import java.io.*;
 
 public class Client{
-	private CLient(){}
+	private Client(){}
 
-	public boolean enviaArquivo(Archive stub, String nome){
+	public static boolean enviaArquivo(Archive stub, String nome){
 		FileInputStream fis = null;
 		File arquivo = new File("./"+ nome);
 		boolean retorno = false;
@@ -18,8 +18,8 @@ public class Client{
 			fis.read(byteArquivo);
 			fis.close();
 
-			retorno = this.stub.uploadArchive(byteArquivo, nome);
-		}catch{
+			retorno = stub.uploadArchive(byteArquivo, nome);
+		}catch (Exception e){
 			System.out.println("Problema com o envio do arquivo");
 		}
 
@@ -37,7 +37,7 @@ public class Client{
 			boolean estado = enviaArquivo(stub, arquivo);
 
 			if(estado == true)
-				System.out.prinlnt("Arquivo " + arquivo + " enviado com sucesso");
+				System.out.println("Arquivo " + arquivo + " enviado com sucesso");
 			else
 				System.out.println("Problema ao enviar arquivo");
 		} catch (Exception e) { 
