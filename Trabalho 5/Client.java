@@ -5,8 +5,9 @@ import java.io.*;
 
 public class Client{
 	private Client(){}
+	private Archive stub;
 
-	public static boolean enviaArquivo(Archive stub, String nome){
+	public static boolean enviaArquivo(String nome){
 		FileInputStream fis = null;
 		File arquivo = new File("./"+ nome);
 		boolean retorno = false;
@@ -18,7 +19,7 @@ public class Client{
 			fis.read(byteArquivo);
 			fis.close();
 
-			retorno = stub.uploadArchive(byteArquivo, nome);
+			retorno = this.stub.uploadArchive(byteArquivo, nome);
 		}catch (Exception e){
 			System.out.println("Problema com o envio do arquivo");
 		}
@@ -32,9 +33,9 @@ public class Client{
 
 		try { 
 			Registry registry = LocateRegistry.getRegistry(host); 
-			Archive stub = (Archive) registry.lookup("Archive");
+			stub = (Archive) registry.lookup("Archive");
 
-			boolean estado = enviaArquivo(stub, arquivo);
+			boolean estado = enviaArquivo(arquivo);
 
 			if(estado == true)
 				System.out.println("Arquivo " + arquivo + " enviado com sucesso");
