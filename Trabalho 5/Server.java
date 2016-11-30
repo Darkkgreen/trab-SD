@@ -12,13 +12,13 @@ public class Server implements Hello{
 
 	public static void main(String args[]){
 		try{
-			Server obj = new Server();
-			Hello stub = (Hello) UnicastRemoteObject.exportObject(obj, 0);
-			Registry registry = LocateRegistry.getRegistry();
-			registry.blind("Hello", stub);
-			System.err.println("Server ready");
+			Server obj = new Server(); 
+			Hello stub = (Hello) UnicastRemoteObject.exportObject(obj, 0);    
+			Registry registry = LocateRegistry.getRegistry(); 
+			registry.bind("Hello", stub); 
+			System.err.println("Server ready"); 
 		} catch(Exception e){
-			Syste.err.println("Server exception: "+ e.toString());
+			System.err.println("Server exception: "+ e.toString());
 			e.printStackTrace();
 		}
 	}
