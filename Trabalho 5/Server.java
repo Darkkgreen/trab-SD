@@ -30,7 +30,7 @@ public class Server implements Archive{
 			Server obj = new Server(); 
 			Archive stub = (Archive) UnicastRemoteObject.exportObject(obj, 0);    
 			Registry registry = LocateRegistry.getRegistry(); 
-			System.setProperty("java.rmi.server.hostname","127.0.0.1");
+			System.setProperty("java.rmi.server.hostname","192.168.0.5");
 			registry.bind("Archive", stub); 
 			System.err.println("Servidor pronto para recebimento"); 
 		} catch(Exception e){
