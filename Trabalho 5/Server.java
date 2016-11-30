@@ -26,12 +26,15 @@ public class Server implements Archive{
 	}
 
 	public static void main(String args[]){
+		String host = (args.length < 1) ? null : args[0];
+
 		try{
 			Server obj = new Server(); 
 			Archive stub = (Archive) UnicastRemoteObject.exportObject(obj, 0);    
 			Registry registry = LocateRegistry.getRegistry(); 
-			System.setProperty("java.rmi.server.hostname","192.168.0.5");
-			registry.bind("Archive", stub); 
+			System.setProperty("java.rmi.server.hostname", host);
+			if((Archive) registry.lookup("Archive") == null)
+				registry.bind("Archive", stub); 
 			System.err.println("Servidor pronto para recebimento"); 
 		} catch(Exception e){
 			System.err.println("Server exception: "+ e.toString());
