@@ -1,0 +1,6 @@
+To Do:
+
+1. Cria instancias do EC e S3
+2. Cria o serviço que vai ficar rodando no EC2, recebendo arquivo e falando pros outros caras para baixar
+3. cria os serviços locais que recebem a mensagem do serviço que roda no EC2 e baixa os dados do S3
+4. Fim

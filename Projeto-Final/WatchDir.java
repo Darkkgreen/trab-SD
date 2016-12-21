@@ -119,11 +119,11 @@ public class WatchDir {
                 //System.out.format("%s: %s\n", event.kind().name(), child);
 
                 if (event.kind().name().equals("ENTRY_CREATE")) {
-                	manager.send(child);
-                	//System.out.println("Criou um arquivo.");
+                    manager.send(child);
+                    //System.out.println("Criou um arquivo.");
                 }else if(event.kind().name().equals("ENTRY_DELETE")){
-                	manager.remove(child);
-	               	//System.out.println("Deletou um arquivo.");
+                    manager.remove(child);
+                    //System.out.println("Deletou um arquivo.");
                 }
 
 
